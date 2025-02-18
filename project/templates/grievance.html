@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grievance Submission</title>
+    <link rel="stylesheet" href="../static/styles/grievance-styles.css">
+</head>
+<body>
+    <h1>Grievance Submission</h1>
+
+    <div id="grievance-console">
+        <div id="console-output">
+            <p>Enter your grievance:</p>
+        </div>
+        <div id="console-input">
+            <input type="text" id="user-input" autofocus>
+        </div>
+    </div>
+
+    <form id="grievance-form" method="POST" style="display: none;">  </form>
+
+    <script>
+        const consoleOutput = document.getElementById('console-output');
+        const userInput = document.getElementById('user-input');
+        const grievanceForm = document.getElementById('grievance-form');
+        let currentQuestion = "grievance"; // Keep track of the current question
+        let grievanceData = {}; // Store the collected data
+
+        userInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                const inputValue = userInput.value;
+                consoleOutput.innerHTML += `<p>You: ${inputValue}</p>`;  // Display user input
+                userInput.value = ''; // Clear input field
+
+                grievanceData[currentQuestion] = inputValue; // Store the input
+
+                // Logic for the next question
+                switch (currentQuestion) {
+                    case "grievance":
+                        currentQuestion = "name";
+                        consoleOutput.innerHTML += `<p>Enter your name:</p>`;
+                        break;
+                    case "name":
+                        currentQuestion = "user_class";
+                        consoleOutput.innerHTML += `<p>Enter your class:</p>`;
+                        break;
+                    case "user_class":
+                        currentQuestion = "user_department";
+                        consoleOutput.innerHTML += `<p>Enter your department:</p>`;
+                        break;
+                    case "user_department":
+                        currentQuestion = "location";
+                        consoleOutput.innerHTML += `<p>Where did the grievance occur?:</p>`;
+                        break;
+                    case "location":
+                        currentQuestion = "email";
+                        consoleOutput.innerHTML += `<p>Enter your college email:</p>`;
+                        break;
+                    case "email":
+                        currentQuestion = "additional_comments";
+                        consoleOutput.innerHTML += `<p>Additional comments (optional):</p>`;
+                        break;
+                    case "additional_comments":
+                        // Submit the form (you'll need to create form elements dynamically)
+                        for (const key in grievanceData) {
+                            const input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = key;
+                            input.value = grievanceData[key];
+                            grievanceForm.appendChild(input);
+                        }
+                        grievanceForm.submit();
+                        break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

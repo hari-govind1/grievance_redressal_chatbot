@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grievance Redressal Bot</title>
+    <link rel="stylesheet" href="../static/styles.css">  </head>
+<body>
+    <h1>Welcome to the Grievance Redressal Bot</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        <button type="submit" name="choice" value="1">Q&A Bot</button>
+        <button type="submit" name="choice" value="2">Grievance Redressal</button>
+        <button type="submit" name="choice" value="3">Exit</button>
+    </form>
+</body>
+</html>

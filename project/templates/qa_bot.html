@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Q&A Bot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Chatbot</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <div id="chat-container">
+        <div id="chat-log">
+            {% if answer %}
+                <p><strong>Chatbot:</strong> {{ answer }}</p>
+            {% endif %}
+        </div>
+        <form method="POST">
+            <input type="text" name="query" id="user-input" placeholder="Type your question...">
+            <button type="submit">Send</button>
+        </form>
+        <a href="{{ url_for('index') }}">Back to Main Menu</a>
+    </div>
+
+    <script>
+        const chatLog = document.getElementById('chat-log');
+        const userInput = document.getElementById('user-input');
+
+        // Optional: Scroll to bottom of chat log
+        chatLog.scrollTop = chatLog.scrollHeight;
+
+        // Optional: Focus on input field when page loads
+        userInput.focus();
+    </script>
+</body>
+</html>
